@@ -25,13 +25,14 @@ export const CREATE_USER_MUTATION = gql`
 
 
 export const INSERT_POST_MUTATION = gql`
-mutation insertPost($title: String!, $content: String!, $authorId: String) {
+mutation insertPost($title: String!, $content: String!, $authorId: uuid) {
   insert_Post_one(object: {title: $title, content: $content, authorId: $authorId}) {
     id
     title
     content
   }
 }
+
 
 `;
 

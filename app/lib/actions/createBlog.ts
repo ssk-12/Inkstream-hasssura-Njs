@@ -14,7 +14,7 @@ export async function createBlog(title: string, content: string) {
         }
     }
 
-    const authorId = session.user.id;
+    const authorId = session.user.id
 
     await serverClient.mutate({
         mutation: INSERT_POST_MUTATION,

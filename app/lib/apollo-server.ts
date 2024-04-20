@@ -6,7 +6,7 @@ const httpLink = new HttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-  // Ensure headers and environment variables are correctly typed
+
   const adminSecret = process.env.HASURA_GRAPHQL_ADMIN_SECRET ?? '';
 
   return {
@@ -20,5 +20,5 @@ const authLink = setContext((_, { headers }) => {
 export const serverClient = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
-  ssrMode: true // Enable server-side rendering mode
+  ssrMode: true 
 });
