@@ -1,9 +1,7 @@
-// lib/auth.ts
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { serverClient } from './apollo-server';
 import bcrypt from 'bcrypt';
-import { User, AuthSession } from '../types/authTypes';
+import { serverClient } from './apollo-server';
 import { FIND_USER_BY_EMAIL_QUERY, CREATE_USER_MUTATION } from './graphql-operations';
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -11,7 +9,7 @@ const verifyPassword = async (userPassword: string, inputPassword: string): Prom
   return bcrypt.compare(inputPassword, userPassword);
 };
 
-const createUser = async (email: string, password: string): Promise<User | null> => {
+const createUser = async (email: string, password: string) => {
   const password_hash = bcrypt.hashSync(password, 10);
   const { data } = await serverClient.mutate({
     mutation: CREATE_USER_MUTATION,
@@ -46,7 +44,7 @@ export const authOptions: NextAuthOptions = {
           fetchPolicy: 'network-only'
         });
 
-        const user = data.User[0] as User | undefined;
+        const user = data.User[0];
 
         if (!user) {
           return await createUser(credentials.email, credentials.password);
@@ -64,11 +62,11 @@ export const authOptions: NextAuthOptions = {
       if (token && session.user) {
         session.user.id = token.sub as string;
       }
-      return session as AuthSession;
+      return session;
     },
     jwt: async ({ token, user }) => {
       if (user) {
-        token.sub = user.id; // JWT sub field will contain user ID
+        token.sub = user.id;
       }
       return token;
     }

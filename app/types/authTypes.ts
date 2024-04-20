@@ -1,18 +1,14 @@
-import { Session } from "next-auth";
+import 'next-auth';
 
-// types/authTypes.ts
-export interface User {
+declare module 'next-auth' {
+  interface User {
     id: string;
     name?: string;
-    email: string;
-    password?: string; // Only used for creating or verifying user, never stored in session
+    email?: string;
+    image?: string;
   }
-  
-  export interface AuthSession extends Session {
-    user: {
-      id: string;
-      name?: string;
-      email: string;
-    }
+
+  interface Session {
+    user: User;
   }
-  
+}

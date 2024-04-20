@@ -1,4 +1,3 @@
-// lib/graphql-operations.ts
 import { gql } from '@apollo/client';
 
 export const FIND_USER_BY_EMAIL_QUERY = gql`
@@ -22,4 +21,28 @@ export const CREATE_USER_MUTATION = gql`
       email
     }
   }
+`;
+
+
+export const INSERT_POST_MUTATION = gql`
+mutation insertPost($title: String!, $content: String!, $authorId: String) {
+  insert_Post_one(object: {title: $title, content: $content, authorId: $authorId}) {
+    id
+    title
+    content
+  }
+}
+
+`;
+
+export const GET_BLOGS_QUERY = gql`
+query GetPost {
+  Post {
+    published
+		content
+		title
+		authorId
+		id
+  }
+}
 `;
