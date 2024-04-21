@@ -9,13 +9,14 @@ const verifyPassword = async (userPassword: string, inputPassword: string): Prom
   return bcrypt.compare(inputPassword, userPassword);
 };
 
-const createUser = async (email: string, password: string) => {
+const createUser = async (email: string, password: string, name:string) => {
   const password_hash = bcrypt.hashSync(password, 10);
   const { data } = await serverClient.mutate({
     mutation: CREATE_USER_MUTATION,
     variables: {
       email,
-      password: password_hash
+      password: password_hash,
+      name
     }
   });
   if (data.insert_User_one) {
@@ -32,6 +33,7 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
+        name: { label: "name", type: "text",placeholder: "not compulsory" },
         email: { label: "Email", type: "email", required: true },
         password: { label: "Password", type: "password", required: true }
       },
@@ -47,7 +49,7 @@ export const authOptions: NextAuthOptions = {
         const user = data.User[0];
 
         if (!user) {
-          return await createUser(credentials.email, credentials.password);
+          return await createUser(credentials.email, credentials.password, credentials.name);
         } else {
           if (await verifyPassword(user.password || '', credentials.password)) {
             return { id: user.id, name: user.name, email: user.email };

@@ -12,13 +12,15 @@ export const FIND_USER_BY_EMAIL_QUERY = gql`
 `;
 
 export const CREATE_USER_MUTATION = gql`
-  mutation insert_user($email: String!, $password: String!) {
+  mutation insert_user($email: String!, $password: String!, $name: String) {
     insert_User_one(object: {
       email: $email,
-      password: $password
+      password: $password,
+      name: $name
     }) {
       id
       email
+      name
     }
   }
 `;

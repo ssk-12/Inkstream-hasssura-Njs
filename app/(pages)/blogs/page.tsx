@@ -28,7 +28,7 @@ async function fetchblogs(){
 }
 
 
-export default async function(){
+export default async function Blog(){
     const posts = await fetchblogs();
     // console.log(data)
     // console.log("post details",data.post)
