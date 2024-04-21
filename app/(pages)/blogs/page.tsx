@@ -6,7 +6,7 @@ async function fetchblogs(){
     const response = await axios.get("https://my-sample-project.hasura.app/api/rest/getpost",{
         headers:{
             "Content-Type": "application/json",
-            "x-hasura-admin-secret": process.env.HASURA_GRAPHQL_ADMIN_SECRET
+            "x-hasura-admin-secret": "8v90LNguD8W77N2K5UPrQ6lthYI6yHSnNlGc0dTD1Ak7YXldfpuYVU7aJWf6WTus"
         }
     })
 
