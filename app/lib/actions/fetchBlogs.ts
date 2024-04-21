@@ -1,25 +1,24 @@
-import fetch from 'node-fetch';
-import { gql } from 'graphql-request';
-import axios from 'axios';
+"use server"
+import { GET_BLOGS_QUERY } from "../graphql-operations";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth";
+import { serverClient } from "../apollo-server";
 
-export async function fetchBlogs() {
-    const query = gql`
-        query GetBlogs {
-            blogs {
-                id
-                title
-                content
-            }
+export async function fetchBlog() {
+    const session = await getServerSession(authOptions);
+    if (!session?.user || !session.user?.id) {
+        return {
+            message: "Unauthenticated request"
         }
-    `;
+    }
 
-    const response = await axios.get("https://my-sample-project.hasura.app/api/rest/getpost",{
-        headers:{
-            "Content-Type": "application/json",
-            "x-hasura-admin-secret": "8v90LNguD8W77N2K5UPrQ6lthYI6yHSnNlGc0dTD1Ak7YXldfpuYVU7aJWf6WTus"
-        }
+
+    const res = await serverClient.mutate({
+        mutation: GET_BLOGS_QUERY,
     })
 
-    const jsond = await response.data;
-    return jsond.Post;
+    console.log(res)
+
+    return res.data.Post;
+
 }

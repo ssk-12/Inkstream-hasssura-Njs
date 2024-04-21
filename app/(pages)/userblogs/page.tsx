@@ -1,8 +1,9 @@
+
 import { Suspense } from 'react';
-import { fetchBlogs } from '@/app/lib/actions/fetchBlogs';
+import { fetchBlog } from '@/app/lib/actions/fetchBlogs';
 
 async function  BlogsContent() {
-    const blogs =await fetchBlogs(); // This is a server-only import
+    const blogs =await fetchBlog(); // This is a server-only import
 
     return (
         <div>
