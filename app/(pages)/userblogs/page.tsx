@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { fetchBlog } from '@/app/lib/actions/fetchBlogs';
 
 async function  BlogsContent() {
-    const blogs =await fetchBlog(); /
+    const blogs =await fetchBlog(); 
 
     return (
         <div>
