@@ -6,19 +6,21 @@ const httpLink = new HttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-
-  const adminSecret = process.env.HASURA_GRAPHQL_ADMIN_SECRET ?? '';
+  // Ensure this is used only on the server-side for security
+  const adminSecret = typeof window === 'undefined' ? process.env.HASURA_GRAPHQL_ADMIN_SECRET : '';
 
   return {
     headers: {
       ...headers,
-      'x-hasura-admin-secret': adminSecret
+      ...(adminSecret && { 'x-hasura-admin-secret': adminSecret }),
     }
   };
 });
 
+const ssrMode = typeof window === 'undefined'; // Enable SSR mode only on the server
+
 export const serverClient = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
-  ssrMode: true 
+  ssrMode: ssrMode
 });
