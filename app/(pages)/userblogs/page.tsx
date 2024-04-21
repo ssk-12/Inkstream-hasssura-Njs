@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { fetchBlog } from '@/app/lib/actions/fetchBlogs';
 
 async function  BlogsContent() {
-    const blogs =await fetchBlog(); // This is a server-only import
+    const blogs =await fetchBlog(); /
 
     return (
         <div>
@@ -29,10 +29,10 @@ async function  BlogsContent() {
                 <div>Author</div>
                 <div className="flex items-center gap-2 m-4">
                   <div className="profile-icon bg-zinc-400 rounded-full h-6 w-6 flex items-center justify-center text-black text-sm font-light">
-                    {post.author?.name?.[0] || 'A'}
+                    {post.author?.User?.[0] || 'A'}
                   </div>
                   <div className="flex flex-col">
-                    <div>Author: {post.author?.name || 'Anonymous'}</div>
+                    <div>Author: {post.User?.name || 'Anonymous'}</div>
                   </div>
                 </div>
               </div>
@@ -45,7 +45,7 @@ async function  BlogsContent() {
 
 function BlogsPage() {
     return (
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<p className='mt-10'>Loading...</p>}>
             <BlogsContent />
         </Suspense>
     );
