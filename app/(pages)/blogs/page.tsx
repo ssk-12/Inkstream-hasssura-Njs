@@ -9,7 +9,7 @@ async function fetchblogs(){
         }
     })
 
-    const posts = response.data.Post
+    const posts = await  response.data.Post
 
     // return response.data.map((post:any) => ({
     //   "content": post.content,
