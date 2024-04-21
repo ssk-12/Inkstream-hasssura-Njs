@@ -9,7 +9,7 @@ const verifyPassword = async (userPassword: string, inputPassword: string): Prom
   return bcrypt.compare(inputPassword, userPassword);
 };
 
-const createUser = async (email: string, password: string, name:string) => {
+const createUser = async (email: string, password: string, name: string) => {
   const password_hash = bcrypt.hashSync(password, 10);
   const { data } = await serverClient.mutate({
     mutation: CREATE_USER_MUTATION,
@@ -33,7 +33,7 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        name: { label: "name", type: "text",placeholder: "not compulsory" },
+        name: { label: "Name", type: "text", placeholder: "Not compulsory" },
         email: { label: "Email", type: "email", required: true },
         password: { label: "Password", type: "password", required: true }
       },
@@ -76,4 +76,6 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.JWT_SECRET,
 };
 
-export default (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, authOptions);
+const authHandler = (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, authOptions);
+
+export default authHandler;
