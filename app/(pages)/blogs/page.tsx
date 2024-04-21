@@ -1,3 +1,4 @@
+"use server"
 import { Blogs } from "@/app/components/blogs";
 import axios from "axios"
 
